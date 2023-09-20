@@ -9,12 +9,11 @@ public class NBody{
 	}
 	public static Planet[] readPlanets(String txt_path){
 		In in = new In(txt_path);
-		int firstItem = in.readInt();
+		int numberOfPlanets = in.readInt();
 		double radius = in.readDouble();
-		Planet[] p = new Planet[5];
-		double[] D = new double[5];
-		for (int i = 0; i < 5; i++){
-
+		Planet[] p = new Planet[numberOfPlanets];
+		double[] D = new double[numberOfPlanets];
+		for (int i = 0; i < numberOfPlanets; i++){
 			for (int j = 0; j < 5; j ++){
 				D[j] = in.readDouble();
 			}
@@ -28,6 +27,8 @@ public class NBody{
 		double T = Double.parseDouble(args[0]);
 		double dt = Double.parseDouble(args[1]);
 		String filename = args[2];
+		In in = new In(filename);
+		int numberOfPlanets = in.readInt();
 		double radius = NBody.readRadius(filename);
 		Planet[] p = NBody.readPlanets(filename);
 		StdDraw.setScale(-3e+12, 3e+12);
@@ -40,8 +41,8 @@ public class NBody{
 		double t = 0;
 		StdDraw.enableDoubleBuffering();
 		while (t != T){
-			double[] xForces = new double[5];
-			double[] yForces = new double[5];
+			double[] xForces = new double[numberOfPlanets];
+			double[] yForces = new double[numberOfPlanets];
 			for (int i = 0; i < p.length; i++){
 				xForces[i] = p[i].calcNetForceExertedByX(p);
 				yForces[i] = p[i].calcNetForceExertedByY(p);
