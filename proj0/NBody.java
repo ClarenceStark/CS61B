@@ -12,7 +12,7 @@ public class NBody{
 		int numberOfPlanets = in.readInt();
 		double radius = in.readDouble();
 		Planet[] p = new Planet[numberOfPlanets];
-		double[] D = new double[numberOfPlanets];
+		double[] D = new double[5];
 		for (int i = 0; i < numberOfPlanets; i++){
 			for (int j = 0; j < 5; j ++){
 				D[j] = in.readDouble();
