@@ -39,7 +39,7 @@ public class Planet {
 		if (this.calcDistance(p) == 0){
 			return 0;
 		}
-		return calcForceExertedBy(p) * (p.xxPos - this.yyPos) / calcDistance(p);
+		return calcForceExertedBy(p) * (p.xxPos - this.xxPos) / calcDistance(p);
 	}
 	public double calcForceExertedByY(Planet p){
 		if (this.calcDistance(p) == 0){
