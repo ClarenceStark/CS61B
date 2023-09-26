@@ -14,9 +14,9 @@ public class LinkedListDeque<T>{
     }
     private Tnode fakeFirst;
     private Tnode fakeLast;
-    T passer;
+    private T passer;
 
-    public int index = 0;
+    private int index = 0;
     public LinkedListDeque() {
         fakeFirst = new Tnode(passer, null, null);
         fakeLast = new Tnode(passer, null, null);
@@ -64,7 +64,7 @@ public class LinkedListDeque<T>{
         } else {
             T item = (T) fakeFirst.next.item;
             fakeFirst.next = fakeFirst.next.next;
-            fakeFirst.next.next.last = fakeFirst;
+            fakeFirst.next.last = fakeFirst;
             return item;
         }
     }
@@ -75,7 +75,7 @@ public class LinkedListDeque<T>{
         } else {
             T item = (T) fakeLast.last.item;
             fakeLast.last = fakeLast.last.last;
-            fakeLast.last.last.next = fakeLast;
+            fakeLast.last.next = fakeLast;
             return item;
         }
     }
@@ -93,7 +93,7 @@ public class LinkedListDeque<T>{
         }
         return (T)temp.item;
     }
-    public T getRecursiveHelper(Tnode t, int i){
+    private T getRecursiveHelper(Tnode t, int i){
         if (t == fakeLast){
             return null;
         }
@@ -107,11 +107,10 @@ public class LinkedListDeque<T>{
     public  T getRecursive(int index){
        return (T)getRecursiveHelper(fakeFirst.next, index);
     }
-    /*public static void main(String[] args){
+    public static void main(String[] args){
         LinkedListDeque<Integer> l = new LinkedListDeque<>();
-        l.addFirst(3);
-        l.addFirst(4);
-        l.addFirst(5);
-        System.out.println(l.getRecursive(6));
-    }*/
+        l.addFirst(10);
+        l.removeFirst();
+        System.out.println();
+    }
 }

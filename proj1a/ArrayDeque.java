@@ -1,9 +1,8 @@
 public class ArrayDeque <T>{
-    public T a[];
-    public int size;
-    public T passer;
+    private T a[];
+    private int size;
 
-    public int containerSize;
+    private int containerSize;
     public ArrayDeque(){
         a = (T[]) new Object[8];
         containerSize = 8;
@@ -40,7 +39,7 @@ public class ArrayDeque <T>{
         }
         size += 1;
     }
-    public T[] expend(){
+    private T[] expend(){
         containerSize = 2 * containerSize;
         T newa [] = (T[]) new Object[containerSize];
         return newa;
