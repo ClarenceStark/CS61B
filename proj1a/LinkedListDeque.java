@@ -25,12 +25,14 @@ public class LinkedListDeque<T>{
     }
     public void addFirst(T item){
         Tnode t  = new Tnode(item, fakeFirst, fakeFirst.next);
+        fakeFirst.next.last = t;
         fakeFirst.next = t;
         size += 1;
     }
     //Adds an item of type T to the back of the deque
     public void addLast(T item){
         Tnode t = new Tnode(item, fakeLast.last, fakeLast);
+        fakeLast.last.next = t;
         fakeLast.last = t;
         size += 1;
     }
@@ -62,6 +64,7 @@ public class LinkedListDeque<T>{
         if (this.isEmpty() == true){
             return null;
         } else {
+            size -= 1;
             T item = (T) fakeFirst.next.item;
             fakeFirst.next = fakeFirst.next.next;
             fakeFirst.next.last = fakeFirst;
@@ -73,6 +76,7 @@ public class LinkedListDeque<T>{
         if (this.isEmpty() == true){
             return null;
         } else {
+            size -= 1;
             T item = (T) fakeLast.last.item;
             fakeLast.last = fakeLast.last.last;
             fakeLast.last.next = fakeLast;
@@ -111,6 +115,14 @@ public class LinkedListDeque<T>{
         LinkedListDeque<Integer> l = new LinkedListDeque<>();
         l.addFirst(10);
         l.removeFirst();
-        System.out.println();
+        l.addFirst(8);
+        l.addLast(3);
+        l.addFirst(2);
+        l.addLast(5);
+        l.removeLast();
+        l.removeFirst();
+        l.removeFirst();
+        l.removeFirst();
+        System.out.println(l.isEmpty());
     }
 }

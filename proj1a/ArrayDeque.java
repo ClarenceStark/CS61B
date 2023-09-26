@@ -63,19 +63,27 @@ public class ArrayDeque <T>{
         }
     }
     public T removeFirst(){
-        T first = a[0];
-        for (int i = 0; i < size - 1; i ++){
-            a[i] = a[i + 1];
+        if (size == 0){
+            return null;
+        } else {
+            T first = a[0];
+            for (int i = 0; i < size - 1; i++) {
+                a[i] = a[i + 1];
+            }
+            a[size - 1] = null;
+            size -= 1;
+            return first;
         }
-        a[size - 1] = null;
-        size -= 1;
-        return first;
     }
     public T removeLast(){
-        T last = a[size - 1];
-        a[size - 1] = null;
-        size -= 1;
-        return last;
+        if (size == 0){
+            return null;
+        } else {
+            T last = a[size - 1];
+            a[size - 1] = null;
+            size -= 1;
+            return last;
+        }
     }
     public T get(int index){
         T theItem = a[index];
