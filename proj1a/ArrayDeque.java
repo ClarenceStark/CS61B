@@ -1,49 +1,47 @@
 public class ArrayDeque <T>{
     private T a[];
     private int size;
-
+    private int firstIndex;
     private int containerSize;
     public ArrayDeque(){
         a = (T[]) new Object[8];
         containerSize = 8;
+        firstIndex = 4;
         size = 0;
     }
-    public void addFirst(T item){
-        if (size == 0) {
-            a[0] = item;
-        }else if(size < containerSize){
-            for (int i = size; i > 0; i--){
-                a[i] = a[i - 1];
-            }
-            a[0] = item;
-        } else{
-            T[] newa = expend();
-            for(int i = size; i > 0; i--){
-                newa[i] = a[i - 1];
-            }
-            newa[0] = item;
-            a = newa;
+    private int minusOne(int Index){
+            return Index - 1;
+    }
+    private void expend(){
+        containerSize = 2 * containerSize;
+        T [] expendedt = (T[]) new Object[containerSize];
+        int newfirstIndex = (containerSize - size) / 2;
+        for (int i = 0; i < size; i++){
+            expendedt[i + newfirstIndex] = a[firstIndex + i];
         }
-        size += 1;
+        firstIndex = newfirstIndex;
+        a = expendedt;
+    }
+    public void addFirst(T item){
+        if (firstIndex == 0){
+            expend();
+        }
+        firstIndex = minusOne(firstIndex);
+        a[firstIndex] = item;
+        size ++;
     }
     public void addLast(T item){
-        if(size < containerSize){
-            a[size] = item;
-        } else{
-            T[] newa = expend();
-            for (int i = 0; i < size ; i ++){
-                newa[i] = a[i];
-            }
-            newa[size] = item;
-            a = newa;
+        if (firstIndex + size == containerSize - 1){
+            expend();
         }
-        size += 1;
+        a[firstIndex + size] = item;
+        size ++;
     }
-    private T[] expend(){
+    /*private T[] expend(){
         containerSize = 2 * containerSize;
         T newa [] = (T[]) new Object[containerSize];
         return newa;
-    }
+    }*/
     public boolean isEmpty(){
         if (size == 0){
             return true;
@@ -55,9 +53,9 @@ public class ArrayDeque <T>{
         return size;
     }
     public void printDeque(){
-        for (int i = 0; i < size; i ++){
+        for (int i = firstIndex; i < firstIndex + size; i ++){
             System.out.print(a[i]);
-            if (i != size - 1){
+            if (i != firstIndex + size - 1){
                 System.out.print(' ');
             }
         }
@@ -66,27 +64,23 @@ public class ArrayDeque <T>{
         if (size == 0){
             return null;
         } else {
-            T first = a[0];
-            for (int i = 0; i < size - 1; i++) {
-                a[i] = a[i + 1];
-            }
-            a[size - 1] = null;
+            T theFirst = a[firstIndex];
+            firstIndex += 1;
             size -= 1;
-            return first;
+            return theFirst;
         }
     }
     public T removeLast(){
         if (size == 0){
             return null;
         } else {
-            T last = a[size - 1];
-            a[size - 1] = null;
+            T theLast = a[firstIndex + size - 1];
             size -= 1;
-            return last;
+            return theLast;
         }
     }
     public T get(int index){
-        T theItem = a[index];
+        T theItem = a[firstIndex + index];
         return theItem;
     }
     /*public static void main(String[] args){
@@ -95,13 +89,16 @@ public class ArrayDeque <T>{
         l.addFirst(2);
         l.addFirst(3);
         l.addFirst(4);
-        l.addFirst(5);
-        l.addFirst(6);
-        l.addFirst(7);
-        l.addFirst(8);
-        l.addFirst(9);
-        l.addLast(10);
-        System.out.println(l.removeFirst());
+        l.addLast(7);
+        l.addLast(9);
+        l.addLast(0);
         l.printDeque();
+        l.removeLast();
+        System.out.println(" ");
+        l.printDeque();
+        l.removeFirst();
+        System.out.println(" ");
+        l.printDeque();
+        System.out.println(l.get(3));
     }*/
 }

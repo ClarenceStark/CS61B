@@ -111,7 +111,7 @@ public class LinkedListDeque<T>{
     public  T getRecursive(int index){
        return (T)getRecursiveHelper(fakeFirst.next, index);
     }
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         LinkedListDeque<Integer> l = new LinkedListDeque<>();
         l.addFirst(10);
         l.removeFirst();
@@ -124,5 +124,5 @@ public class LinkedListDeque<T>{
         l.removeFirst();
         l.removeFirst();
         System.out.println(l.isEmpty());
-    }
+    }*/
 }
