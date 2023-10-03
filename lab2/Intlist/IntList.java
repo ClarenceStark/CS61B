@@ -1,5 +1,4 @@
 import java.util.Formatter;
-
 /**
  * A naked recursive list of integers, similar to what we saw in lecture 3, but
  * with a large number of additional methods.
@@ -11,11 +10,11 @@ public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -29,7 +28,7 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
@@ -81,8 +80,12 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList C = A;
+        while (C.rest != null) {
+            C = C.rest;
+        }
+        C.rest = B;
+        return A;
     }
 
     /**
@@ -90,13 +93,21 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList C = new IntList(A.first, null);
+        IntList D = C;
+        A = A.rest;
+        while (A != null) {
+            D.rest = new IntList(A.first, null);
+            A = A.rest;
+            D = D.rest;
+        }
+        while (B != null) {
+            D.rest = new IntList(B.first, null);
+            B = B.rest;
+            D = D.rest;
+        }
+        return C;
     }
-
-
-
-
 
 
 
@@ -231,4 +242,3 @@ public class IntList {
         return out.toString();
     }
 }
-
