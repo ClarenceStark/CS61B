@@ -20,7 +20,7 @@ public class Palindrome {
         } else{
             char f = (char) d.removeFirst();
             char l = (char) d.removeLast();
-            return (c.equalChars(f, l) || f == l) && isPalindromeD(d, c);
+            return (c.equalChars(f, l) && isPalindromeD(d, c));
         }
     }
     public boolean isPalindrome(String word) {
