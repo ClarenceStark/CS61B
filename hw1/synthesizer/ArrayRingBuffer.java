@@ -1,10 +1,6 @@
-// TODO: Make sure to make this class a part of the synthesizer package
-// package <package name>;
+package synthesizer;
 import java.util.Iterator;
-
-//TODO: Make sure to make this class and all of its methods public
-//TODO: Make sure to make this class extend AbstractBoundedQueue<t>
-public class ArrayRingBuffer<T>  {
+public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Iterable<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
     /* Index for the next enqueue. */
@@ -12,15 +8,38 @@ public class ArrayRingBuffer<T>  {
     /* Array for storing the buffer data. */
     private T[] rb;
 
+    private class ArbIterator implements Iterator<T> {
+        private int ptr;
+        private int num;
+        public ArbIterator() {
+            ptr = first;
+            num = 0;
+        }
+        public boolean hasNext() {
+            return num < capacity();
+        }
+
+        public T next() {
+            T returnItem = rb[ptr];
+            ptr = (ptr + 1) % capacity();
+            num++;
+            return returnItem;
+        }
+    }
+
+    public Iterator<T> iterator() {
+        return new ArbIterator();
+    }
+
     /**
      * Create a new ArrayRingBuffer with the given capacity.
      */
     public ArrayRingBuffer(int capacity) {
-        // TODO: Create new array with capacity elements.
-        //       first, last, and fillCount should all be set to 0.
-        //       this.capacity should be set appropriately. Note that the local variable
-        //       here shadows the field we inherit from AbstractBoundedQueue, so
-        //       you'll need to use this.capacity to set the capacity.
+        rb = (T[]) new Object[capacity];
+        this.capacity = capacity;
+        fillCount = 0;
+        first = 1;
+        last = 0;
     }
 
     /**
@@ -29,8 +48,18 @@ public class ArrayRingBuffer<T>  {
      * covered Monday.
      */
     public void enqueue(T x) {
-        // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
+        if (fillCount() < capacity()) {
+            if (last == capacity() - 1) {
+                last = -1;
+            }
+            rb[last + 1] = x;
+            last += 1;
+            fillCount++;
+        } else {
+            throw new RuntimeException("Cannot add element to a full array!");
+        }
     }
+
 
     /**
      * Dequeue oldest item in the ring buffer. If the buffer is empty, then
@@ -38,15 +67,24 @@ public class ArrayRingBuffer<T>  {
      * covered Monday.
      */
     public T dequeue() {
-        // TODO: Dequeue the first item. Don't forget to decrease fillCount and update 
+        if (fillCount() > 0) {
+            T fir = rb[first];
+            rb[first] = null;
+            first++;
+            fillCount--;
+            if (first == capacity()) {
+                first = 0;
+            }
+            return fir;
+        } else {
+            throw new RuntimeException("Cannot remove element from an empty array!");
+        }
     }
 
     /**
      * Return oldest item, but don't remove it.
      */
     public T peek() {
-        // TODO: Return the first item. None of your instance variables should change.
+        return rb[first];
     }
-
-    // TODO: When you get to part 5, implement the needed code to support iteration.
 }
