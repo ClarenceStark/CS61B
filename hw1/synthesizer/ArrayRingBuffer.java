@@ -1,6 +1,6 @@
 package synthesizer;
 import java.util.Iterator;
-public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Iterable<T> {
+public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
     /* Index for the next enqueue. */
@@ -85,6 +85,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
      * Return oldest item, but don't remove it.
      */
     public T peek() {
+        if (rb[first] == null) {
+            throw new RuntimeException("Cannot get the peek of an empty array!");
+        }
         return rb[first];
     }
 }
